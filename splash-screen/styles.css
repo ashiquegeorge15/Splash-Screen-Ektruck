@@ -1,0 +1,676 @@
+/* Add font import at the top of CSS */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+/* Reset and general styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Add this at the top of your CSS file */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: #1a1a1a; /* Match your existing background */
+    z-index: 1; /* Place it behind other content */
+    top: 0;
+    left: 0;
+}
+
+/* Splash screen styles */
+.splash {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+}
+
+.splash-logo {
+    position: fixed;
+    top: 0;
+    left: 25%;
+    transform: none;
+}
+
+.logo {
+    position: relative;
+    overflow: visible;
+    background-color: #ff0000;
+    width: 200px;
+    height: 0;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform-origin: top;
+    animation: boxGrowFromTop 1s ease-out forwards;
+}
+
+.logo span {
+    position: relative;
+    margin-top: 100px;
+    color: white;
+    font-size: 80px;
+    font-weight: 800;
+    text-transform: lowercase;
+    animation: textChange 4s linear infinite;
+    animation-delay: 1s; /* Start after fall animation */
+}
+
+.changing-text {
+    position: absolute;
+    bottom: 10px;
+    left: calc(25% + 50px);
+    transform: none;
+    opacity: 0;
+    animation: textFall 0.8s ease-out forwards;
+    animation-delay: 1s;
+    display: flex;
+    letter-spacing: 0px;
+}
+
+.truck-text {
+    position: absolute;
+    white-space: nowrap;
+    font-size: 20px;
+    left: 100vw;
+    bottom: 10px;
+    display: none;
+    letter-spacing: 0px;
+}
+
+/* Add a metallic effect to both texts */
+.changing-text, .truck-text {
+    background: linear-gradient(180deg, #fff 0%, #d4d4d4 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 60px;
+    line-height: 1;
+    height: auto;
+}
+
+.truck-text.slide-in {
+    animation: truckJoin 2s forwards;
+}
+
+/* Update animations */
+@keyframes fallDown {
+    from {
+        top: -200vh;
+    }
+    to {
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes truckJoin {
+    0% {
+        left: 100vw;
+        bottom: 10px;
+        opacity: 0;
+    }
+    100% {
+        left: calc(25% + 160px);
+        bottom: 5px;
+        opacity: 1;
+    }
+}
+
+@keyframes moveLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-200vw);
+    }
+}
+
+/* Update shadow pulse animation
+@keyframes shadowPulse {
+    0% {
+        box-shadow: 0 20px 0 0 rgba(255, 255, 255, 0);
+    }
+    100% {
+        box-shadow: 0 0px 30px 0 rgba(255, 255, 255, 0.3);
+    }
+} */
+
+/* Hide splash screen */
+.splash.hide {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s ease;
+}
+
+/* Main content styles */
+.content {
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.content.show {
+    opacity: 1;
+}
+
+/* Add combined movement animation */
+.splash-logo.move-left {
+    animation: moveLeft 2s forwards;
+}
+
+/* Container for the entire ektruck */
+.ektruck-container {
+    position: fixed; /* Change to fixed */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 201;
+}
+
+.ektruck-container.exit {
+    animation: moveLeft 2s ease-in-out forwards;
+}
+
+/* Update tire positions */
+.tire {
+    position: absolute;
+    width: 80px; /* Increased from 50px */
+    height: 80px; /* Increased from 50px */
+    border-radius: 50%;
+    display: none;
+    bottom: -90px; /* Adjusted for larger size */
+}
+
+.front-tire {
+    background-color: #ff0000;
+    left: calc(25% + 70px);
+    bottom: -90px;
+}
+
+.rear-tire-1 {
+    background-color: #ffa500;
+    left: calc(25% + 330px);
+    bottom: -90px;
+}
+
+.rear-tire-2 {
+    background-color: #00ff00;
+    left: calc(25% + 450px);
+    bottom: -90px;
+}
+
+/* Update tire animations for larger size */
+@keyframes tireSlideUp {
+    0% {
+        transform: translateY(170px) rotate(0deg); /* Adjusted for larger size */
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0) rotate(360deg);
+        opacity: 1;
+    }
+}
+
+.tire.slide-up {
+    display: block;
+    animation: tireSlideUp 1s ease-out forwards;
+}
+
+/* Update the exit animation */
+@keyframes exitLeft {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-200vw);
+    }
+}
+
+.ektruck-container.exit {
+    animation: exitLeft 2s ease-in-out forwards;
+}
+
+/* Add tire animations */
+@keyframes frontTireSlide {
+    from {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rearTiresAppear {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Update tire rotation animation */
+@keyframes tireRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(720deg);
+    }
+}
+
+.tire.rotating {
+    animation: tireRotate 2s linear infinite;
+}
+
+/* Add these classes for movement */
+.tire.move-left {
+    animation: tireRotateAndMove 2s linear forwards;
+}
+
+/* Add styles for stacking text */
+.stacking-container {
+    position: fixed;
+    top: 50%;
+    left: 100px; /* Back to original left position */
+    transform: translateY(-50%);
+    text-align: left;
+    display: none;
+    z-index: 201;
+}
+
+.stacking-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 120px; /* Increased from 72px */
+    color: white;
+    opacity: 0;
+    position: absolute;
+    left: 0;
+    transform: translateX(0);
+    white-space: nowrap;
+}
+
+/* Position updates for text lines */
+.stacking-text:nth-child(1) { 
+    top: -250px;
+    left: 0;
+} /* #doers */
+
+.stacking-text:nth-child(2) { 
+    top: -130px;
+    left: 0;
+}  /* #movers */
+
+.stacking-text:nth-child(3) { 
+    top: -5px;
+    left: 0;
+}   /* #innovators */
+
+/* Update the IN LOGISTICS text style */
+.stacking-text:nth-child(4) { 
+    top: 280px;
+    width: 100vw;
+    left: -60%;
+    transform: translateX(0);
+    text-align: center;
+    font-family: 'Inter', sans-serif; /* Changed from Bebas Neue to Inter */
+    font-weight: 700; /* Bold weight */
+    font-size: 35px;
+    letter-spacing: 5px;
+    color: #ffffff !important;
+    text-shadow: none;
+}
+
+.hashtag {
+    color: #ff0000;
+    font-weight: 700;
+}
+
+/* Update the text animation keyframes without glow */
+@keyframes slideInAndGlow {
+    0% {
+        transform: translateX(-200%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.stacking-text.animate {
+    animation: slideInAndGlow 1s forwards;
+    animation-iteration-count: 1;
+}
+
+/* Add styles for the final content */
+.final-content {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 201;
+}
+
+.final-logo {
+    transform: scale(0.8);
+    opacity: 0;
+}
+
+.future-text {
+    color: white;
+    font-size: 42px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    margin-top: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* Update exit animation for stacking text */
+@keyframes stackingTextSplitExit {
+    0% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+        filter: brightness(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.2);
+        opacity: 0.8;
+        filter: brightness(1.5) blur(2px);
+        text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    }
+    100% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+        filter: brightness(2) blur(5px);
+    }
+}
+
+/* Add letter splitting effect */
+.stacking-text.exit {
+    animation: stackingTextSplitExit 1s ease-in forwards;
+    animation-iteration-count: 1; /* Ensure it only runs once */
+}
+
+.stacking-text.exit span {
+    display: inline-block;
+    animation: letterSplit 0.8s ease-in forwards;
+}
+
+@keyframes letterSplit {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(var(--split-direction));
+        opacity: 0;
+        text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    }
+}
+
+/* Entry animation for final content */
+@keyframes finalLogoEntry {
+    0% {
+        transform: scale(0.8) translateY(-50px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes futureTextEntry {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.final-content.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+.final-logo.animate {
+    animation: finalLogoEntry 1.2s ease-out forwards;
+}
+
+.future-text.animate {
+    animation: futureTextEntry 1s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+/* Box growing animation */
+@keyframes boxGrowFromTop {
+    0% {
+        height: 0;
+        transform: translateY(0);
+    }
+    100% {
+        height: 60vh; /* Grow to center of screen */
+    }
+}
+
+/* Text falling animation */
+@keyframes textFall {
+    0% {
+        transform: translate(-50%, -100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%);
+        opacity: 1;
+    }
+}
+
+.logistics-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 35px;
+    letter-spacing: 5px;
+    color: #ffffff;
+    background: linear-gradient(180deg, #ffffff 0%, #ffffff 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.3); */
+    position: relative;
+    padding-top: 0px;
+    left: 25%;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    /* font-family: 'Bebas Neue', sans-serif; */
+}
+
+/* Add specific animation for logistics text */
+@keyframes logisticsSlideIn {
+    0% {
+        left: -100%;
+        opacity: 0;
+    }
+    100% {
+        left: 50%;
+        transform: translateX(-55%);
+        opacity: 1;
+    }
+}
+
+/* Remove the glow animation */
+.stacking-text:nth-child(4).animate {
+    animation: logisticsSlideIn 1s ease-out forwards;
+}
+
+/* Update the background styles */
+.background {
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: #1a1a1a;
+}
+
+/* Update z-index of other elements to be above background */
+.splash {
+    z-index: 200;
+    background-color: transparent; /* Changed from semi-transparent */
+}
+
+@keyframes logisticsGlow {
+    0% {
+        text-shadow: 0 0 15px #00ff99, 0 0 25px #00ff99;
+    }
+    50% {
+        text-shadow: 0 0 25px #00ff99, 0 0 35px #00ff99;
+    }
+    100% {
+        text-shadow: 0 0 15px #00ff99, 0 0 25px #00ff99;
+    }
+}
+
+
+/* Container for truck and registered symbol */
+.truck-container {
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.truck-container.slide-in {
+    animation: truckJoin 2s forwards;
+}
+
+/* Simplify the animation for cleaner appearance */
+@keyframes registerSymbolAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.registered-symbol.show {
+    animation: registerSymbolAppear 0.3s ease-out forwards;
+}
+
+/* Create a slide-in animation for the registered symbol */
+@keyframes registerSymbolSlideIn {
+    0% {
+        transform: translateX(5px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Update the registered symbol styles */
+.registered-symbol {
+    position: absolute;
+    font-weight: normal;
+    z-index: 999;
+    pointer-events: none;
+    top: 0;
+    right: -15px;
+    font-size: 12px;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    opacity: 0; /* Start invisible */
+}
+
+.registered-symbol.slide-in {
+    animation: registerSymbolSlideIn 0.5s ease-out forwards;
+}
+
+/* Update tagline styles with animation */
+.ektruck-tagline {
+    position: fixed;
+    bottom: 10%;
+    width: 100%;
+    text-align: center;
+    color: #ffffff;
+    font-family: 'Inter', sans-serif;
+    font-size: 48px;
+    letter-spacing: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 202;
+    
+}
+
+.ektruck-tagline.show {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Add new exit animation for tagline */
+.ektruck-tagline.exit {
+    animation: taglineExit 1.5s ease-in-out forwards;
+}
+
+@keyframes taglineExit {
+    0% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1.2);
+        filter: brightness(1.5) blur(2px);
+        letter-spacing: 10px;
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.5);
+        filter: brightness(2) blur(5px);
+        letter-spacing: 20px;
+    }
+}
